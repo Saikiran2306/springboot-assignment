@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="/css/Cinematography.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/bootstrap-dropdownhover.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
     <title>Home</title>
 </head>
 <body>
@@ -21,6 +23,12 @@
         function changeValue() {
   document.getElementById("findby").value = document.getElementById("option").value;
 }
+
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+
 
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark font-weight-bold">
@@ -31,16 +39,28 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Edit Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="Login.html"> Logout</a></li>
+            <li class="nav-item mt-2 mr-2"><a class="text-white"  title="" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Search for your favourite movies and get complete information of that movie.">About</a></li>
+            <li class="nav-item"><a class="nav-link text-white" th:href="@{/updateDetails(userId=${user.id})}">Edit Profile</a></li>
+<li>
+
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" class="btn btn-dark text-white font-weight-bold"/>
+    </form>
+
+</li>
         </ul>
     </div>
 </nav>
-<div class="d-flex">
+<div class="d-flex mt-3">
+<div class="ml-auto mr-3">
+    User-Id: <span  th:text=" ${user.id}"/><br>
+    Name: <span  th:text=" ${user.firstName}"/>
+</div>
+</div>
+<div class="d-flex" style="margin-top: -35px;">
     <div class="col-6 offset-3 mt-5 pt-2 pl-5">
         <form th:action="@{/home/listmovies}" method="GET">
-            <label class="note ml-5 pl-5 mb-3">Search for your favourite actors and movies. </label>
+            <label class="note ml-5 pl-5 mb-3">Search for your favourite actors and movies.</label>
             <div class="ml-5 mb-3">
                 Search by
                 <input type="hidden" th:name="findby" id="findby"/>
@@ -57,6 +77,7 @@
                 <button class="ml-2" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
+        <div class="list-table" style="margin-left:-8vw">
         <table class="table">
             <thead>
             <tr class="font-weight-bold">
@@ -71,7 +92,7 @@
             </tr>
             </thead>
 
-            <tbody class="overflow-auto">
+            <tbody>
             <tr class="f-15" th:each="tempUserMovie : ${usermovies}">
 
                 <td th:text="${tempUserMovie.movie.movieName}"/>
@@ -86,6 +107,7 @@
 
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 <footer class="page-footer fixed-bottom bg-dark font-weight-bold">

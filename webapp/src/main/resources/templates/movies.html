@@ -22,6 +22,12 @@
   document.getElementById("findby").value = document.getElementById("option").value;
 }
 
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+
+
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark font-weight-bold">
     <a class="navbar-brand" href="Home.html">CINEMATOGRAPHY</a>
@@ -31,13 +37,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Edit Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="Login.html"> Logout</a></li>
+            <li class="nav-item mt-2 mr-2"><a class="text-white"  title="" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="Search for your favourite movies and get complete information of that movie.">About</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Edit Profile</a></li>
+            <li>
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" value="Logout" class="btn btn-dark text-white font-weight-bold"/>
+                </form>
+
+            </li>
         </ul>
     </div>
 </nav>
-<div class="d-flex">
+<div class="d-flex mt-3">
+    <div class="ml-auto mr-3">
+        User-Id: <span  th:text=" ${user.id}"/><br>
+        Name: <span  th:text=" ${user.firstName}"/>
+    </div>
+</div>
+<div class="d-flex" style="margin-top: -35px;">
     <div class="col-6 offset-3 mt-5 pt-2 pl-5">
         <form th:action="@{/home/listmovies}" method="GET">
             <label class="note ml-5 pl-5 mb-3">Search for your favourite actors and movies. </label>
